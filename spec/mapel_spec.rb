@@ -23,7 +23,7 @@ describe Mapel do
       info[:format].should == 'JPEG'
       info[:dimensions].should == [572, 591]
       info[:depth].should == '8-bit'
-      info[:size].should == '95.1kb'
+      ["95.1kb", "97.4KB"].include?(info[:size]).should == true
     end
   end
 
