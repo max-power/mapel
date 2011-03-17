@@ -25,6 +25,10 @@ describe Mapel do
       info[:depth].should == '8-bit'
       ["95.1kb", "97.4KB"].include?(info[:size]).should == true
     end
+
+    it "should return an empty hash if metadata can not be extracted" do
+      Mapel.info("invalid.jpg").should == {}
+    end
   end
 
   describe "#render" do

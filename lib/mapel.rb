@@ -104,6 +104,7 @@ module Mapel
       end
 
       def to_info_hash
+        return {} if @output == ""
         meta = @output.split(' ')
         {
           :path       => meta[0],
