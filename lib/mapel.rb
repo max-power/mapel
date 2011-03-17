@@ -97,7 +97,7 @@ module Mapel
         @commands.pop
         self
       end
-      
+
       def run
         @output = `#{to_preview}`
         @status = ($? == 0)
