@@ -68,6 +68,11 @@ module Mapel
         self
       end
 
+      def strip
+        @commands << "-strip"
+        self
+      end
+
       def resize(*args)
         @commands << "-resize \"#{Geometry.new(*args)}\""
         self

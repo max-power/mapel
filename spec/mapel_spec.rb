@@ -61,5 +61,10 @@ describe Mapel do
       cmd.resize(50, 50)
       cmd.to_preview.should == %(convert #{logo} -gravity west -resize "50x50")
     end
+
+    it "should allow stripping additional image metadata" do
+      cmd = Mapel(logo).strip.resize(50, 50)
+      cmd.to_preview.should == %(convert #{logo} -strip -resize "50x50")
+    end
   end
 end
