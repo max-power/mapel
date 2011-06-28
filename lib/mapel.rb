@@ -4,7 +4,7 @@ end
 
 module Mapel
 
-  # Mapel.info("image.jpg")
+  # Returns basic information on given image.
   def self.info(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).info(source)
   end
@@ -14,12 +14,17 @@ module Mapel
     Mapel::Engine.const_get(camelize(engine)).exif(source)
   end
 
-  # Mapel.render("image.jpg").resize("50%").to("output.jpg").run
+  # Allows chaining rendering commands. After chaining,
+  # call .run to perform the transformation.
+  #
+  # Example:
+  #   Mapel.render("image.jpg").resize("50%").to("output.jpg").run
+  #
   def self.render(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).render(source)
   end
 
-  # Mapel.list
+  # Lists commands supported by the engine.
   def self.list(engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).list
   end
