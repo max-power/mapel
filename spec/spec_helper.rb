@@ -15,6 +15,10 @@ def logo
   @logo ||= in_folder + '/ImageMagick.jpg'
 end
 
+def multi_word_file
+  @multi_word_file ||= in_folder + '/multi-word file.jpg'
+end
+
 def setup
   unless File.exists?(out_folder)
     Dir.mkdir(out_folder)

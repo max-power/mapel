@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe Mapel do
+
   before {setup}
   after {teardown}
 
@@ -28,6 +29,10 @@ describe Mapel do
 
     it "should return an empty hash if metadata can not be extracted" do
       Mapel.info("invalid.jpg").should == {}
+    end
+
+    it "should be able to read files with spaces in the filename" do
+      Mapel.info(multi_word_file)[:path].should == multi_word_file
     end
   end
 
@@ -59,12 +64,26 @@ describe Mapel do
     it "should allow arbitrary addition of commands to the queue" do
       cmd = Mapel(logo).gravity(:west)
       cmd.resize(50, 50)
-      cmd.to_preview.should == %(convert #{logo} -gravity west -resize "50x50")
+      cmd.to_preview.should == %(convert "#{logo}" -gravity west -resize "50x50")
     end
 
     it "should allow stripping additional image metadata" do
       cmd = Mapel(logo).strip.resize(50, 50)
-      cmd.to_preview.should == %(convert #{logo} -strip -resize "50x50")
+      cmd.to_preview.should == %(convert "#{logo}" -strip -resize "50x50")
+    end
+
+    it "should be able to handle input filenames containing spaces" do
+      out_file = "#{out_folder}/resized.jpg"
+      cmd = Mapel(multi_word_file).resize('100x').to(out_file).run
+      cmd.status.should == true
+      Mapel.info(out_file)[:dimensions].should == [100, 103]
+    end
+
+    it "should be able to handle output filenames containing spaces" do
+      out_file = "#{out_folder}/multi-word file.jpg"
+      cmd = Mapel(@logo).resize('100x').to(out_file).run
+      cmd.status.should == true
+      Mapel.info(out_file)[:dimensions].should == [100, 103]
     end
   end
 end
