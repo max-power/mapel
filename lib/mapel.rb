@@ -20,6 +20,10 @@ module Mapel
   # Example:
   #   Mapel.render("image.jpg").resize("50%").to("output.jpg").run
   #
+  # Some commands support ImageMagick geometry. For a complete list
+  # of geometry options, visit
+  #   http://www.imagemagick.org/script/command-line-processing.php#geometry
+  #
   def self.render(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).render(source)
   end
@@ -69,59 +73,100 @@ module Mapel
         im.run
       end
 
+      # Crops an image to specified dimensions.
+      #
+      # More information on ImageMagick's crop option:
+      #   http://www.imagemagick.org/script/command-line-options.php#crop
+      #
       def crop(*args)
         @commands << %(-crop "#{Geometry.new(*args).to_s(true)}")
         self
       end
 
+      # Sets the current gravity suggestion to given type.
+      #
+      # Values for type incule:
+      #   NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast
+      #
+      # Call `convert -list gravity` to get a complete list of -gravity settings
+      # available in your ImageMagick installation.
+      #
+      # More information on ImageMagick's gravity option:
+      #   http://www.imagemagick.org/script/command-line-options.php#gravity
+      #
       def gravity(type = :center)
         @commands << "-gravity #{type}"
         self
       end
 
+      # Resets the virtual canvas meta-data on the image.
+      #
+      # More information on ImageMagick's repage option:
+      #   http://www.imagemagick.org/script/command-line-options.php#repage
+      #
       def repage
         @commands << "+repage"
         self
       end
 
-      # Removes EXIF profile data.
+      # Removes any profiles or comments from the image,
+      # including EXIF meta-data.
       def strip
         @commands << "-strip"
         self
       end
 
-      # Automagically rotates an image with EXIF Orientation.
-      # If the EXIF profile was previously stripped, the orient will do nothing.
+      # Automatically rotates an image with EXIF Orientation.
+      # If the EXIF profile was previously stripped, orient will do nothing.
+      #
+      # More information on ImageMagick's auto-orient option:
+      #   http://www.imagemagick.org/script/command-line-options.php#auto-orient
+      #
       def orient
         @commands << "-auto-orient"
         self
       end
 
+      # Resizes an image to given geometry args.
+      #
+      # More information on ImageMagick's resize option:
+      #   http://www.imagemagick.org/script/command-line-options.php#resize
+      #
       def resize(*args)
         @commands << %(-resize "#{Geometry.new(*args)}")
         self
       end
 
+      # Resizes and crops an image to dimensions specified in geometry args.
+      # Performs resize + crop + repage
       def resize!(*args)
         width, height = Geometry.new(*args).dimensions
         resize("#{width}x#{height}^").crop(width, height).repage
       end
 
+      # Scales an image to given geometry args, which is faster than resizing.
+      #
+      # More information on ImageMagick's scale option:
+      #   http://www.imagemagick.org/script/command-line-options.php#scale
+      #
       def scale(*args)
         @commands << %(-scale "#{Geometry.new(*args)}")
         self
       end
 
+      # Sets the output path.
       def to(path)
         @commands << path.inspect
         self
       end
 
+      # Removes the last command from chain.
       def undo
         @commands.pop
         self
       end
 
+      # Performs the command.
       def run
         @output = `#{to_preview}`
         @status = ($? == 0)
