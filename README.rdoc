@@ -1,16 +1,14 @@
-== Mapel: A dead-simple image-rendering DSL
+= Mapel
 
-<tt>Mapel</tt> is a dead-simple, chainable image-rendering DSL for ImageMagick. 
+Mapel is a dead-simple, chainable image-rendering DSL for ImageMagick. 
 Still very much an experiment-in-progress, it supports a dozen or so essential
 commands.
 
-Example:
+
+== Example
 
   Mapel.render('image.jpg').resize("50%").to('output.jpg').run
 
-== Fun Fact
-
-<tt>Mapel</tt> is named after a tortoiseshell cat.
 
 == Meta
 
@@ -19,3 +17,5 @@ Written by Aleks Williams (http://github.com/akdubya)
 Released under the MIT License: www.opensource.org/licenses/mit-license.php
 
 github.com/akdubya/mapel
+
+Fun Fact: Mapel is named after a tortoiseshell cat.
