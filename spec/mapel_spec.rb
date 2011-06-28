@@ -110,5 +110,13 @@ describe Mapel do
       cmd.status.should == true
       Mapel.info(out_file)[:dimensions].should == [100, 103]
     end
+
+    it "should allow automatic rotation of images" do
+      out_file = "#{out_folder}/rotated.jpg"
+      cmd = Mapel(rotated_image).orient.to(out_file).run
+      cmd.status.should == true
+      Mapel.exif(out_file)["Orientation"].should == "1"
+      Mapel.info(out_file)[:dimensions].should == [194, 200]
+    end
   end
 end

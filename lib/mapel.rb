@@ -85,6 +85,13 @@ module Mapel
         self
       end
 
+      # Automagically rotates an image with EXIF Orientation.
+      # If the EXIF profile was previously stripped, the orient will do nothing.
+      def orient
+        @commands << "-auto-orient"
+        self
+      end
+
       def resize(*args)
         @commands << "-resize \"#{Geometry.new(*args)}\""
         self
