@@ -19,6 +19,10 @@ def multi_word_file
   @multi_word_file ||= "#{in_folder}/multi-word file.jpg"
 end
 
+def rotated_image
+  @rotated_image ||= "#{in_folder}/rotated-image.jpg"
+end
+
 def setup
   unless File.exists?(out_folder)
     Dir.mkdir(out_folder)
