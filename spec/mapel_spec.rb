@@ -17,7 +17,7 @@ describe Mapel do
     Mapel(logo).should.be.kind_of(Mapel::Engine)
   end
 
-  describe "#info" do
+  describe ".info" do
     it "should return basic image metadata" do
       info = Mapel.info(logo)
       info[:path].should == logo
@@ -36,7 +36,7 @@ describe Mapel do
     end
   end
 
-  describe "#exif" do
+  describe ".exif" do
     it "should return EXIF image data" do
       exif = Mapel.exif(rotated_image)
       exif["ExifImageWidth"].should == "200"
@@ -55,13 +55,13 @@ describe Mapel do
     end
   end
 
-  describe "#list" do
+  describe ".list" do
     it "should list ImageMagick commands" do
       Mapel.list.output.should =~ /^Version: ImageMagick/
     end
   end
 
-  describe "#render" do
+  describe ".render" do
     it "should be able to scale an image" do
       out_file = "#{out_folder}/scaled.jpg"
       cmd = Mapel(logo).scale("50%").to(out_file).run
