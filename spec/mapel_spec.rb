@@ -55,6 +55,12 @@ describe Mapel do
     end
   end
 
+  describe "#list" do
+    it "should list ImageMagick commands" do
+      Mapel.list.output.should =~ /^Version: ImageMagick/
+    end
+  end
+
   describe "#render" do
     it "should be able to scale an image" do
       out_file = "#{out_folder}/scaled.jpg"
