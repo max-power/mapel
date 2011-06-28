@@ -9,6 +9,11 @@ module Mapel
     Mapel::Engine.const_get(camelize(engine)).info(source)
   end
 
+  # Extracts EXIF data from image.
+  def self.exif(source, engine = :image_magick)
+    Mapel::Engine.const_get(camelize(engine)).exif(source)
+  end
+
   # Mapel.render('image.jpg').resize("50%").to('output.jpg').run
   def self.render(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).render(source)
@@ -37,6 +42,13 @@ module Mapel
         im.commands << 'identify'
         im.commands << source.inspect
         im.run.to_info_hash
+      end
+
+      def self.exif(source)
+        im = new
+        im.commands << 'identify -format %[exif:*]'
+        im.commands << source.inspect
+        im.run.to_exif_hash
       end
 
       def self.render(source = nil)
@@ -119,6 +131,13 @@ module Mapel
           :depth      => meta[-5],
           :size       => meta[-3]
         }
+      end
+
+      # Converts EXIF data into a hash of values.
+      def to_exif_hash
+        return {} if @output == ""
+        meta = @output.scan(/exif:([^=]+)=([^\n]+)/)
+        Hash[meta]
       end
     end
   end

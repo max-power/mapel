@@ -36,6 +36,25 @@ describe Mapel do
     end
   end
 
+  describe "#exif" do
+    it "should return EXIF image data" do
+      exif = Mapel.exif(rotated_image)
+      exif["ExifImageWidth"].should == "200"
+      exif["ExifImageLength"].should == "194"
+      exif["XResolution"].should == "3000000/10000"
+      exif["YResolution"].should == "3000000/10000"
+      exif["ResolutionUnit"].should == "2"
+      exif["ColorSpace"].should == "65535"
+      exif["ExifOffset"].should == "164"
+      exif["Orientation"].should == "6"
+      exif["Compression"].should == "6"
+      exif["JPEGInterchangeFormatLength"].should == "7072"
+      exif["JPEGInterchangeFormat"].should == "302"
+      exif["DateTime"].should == "2011:06:28 10:40:20"
+      exif["Software"].should == "Adobe Photoshop CS3 Macintosh"
+    end
+  end
+
   describe "#render" do
     it "should be able to scale an image" do
       out_file = "#{out_folder}/scaled.jpg"
