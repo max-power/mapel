@@ -91,8 +91,10 @@ describe Mapel do
     end
 
     it "should allow stripping additional image metadata" do
-      cmd = Mapel(logo).strip.resize(50, 50)
-      cmd.to_preview.should == %(convert "#{logo}" -strip -resize "50x50")
+      out_file = "#{out_folder}/stripped.jpg"
+      cmd = Mapel(rotated_image).strip.to(out_file).run
+      cmd.status.should == true
+      Mapel.exif(out_file).should == {}
     end
 
     it "should be able to handle input filenames containing spaces" do

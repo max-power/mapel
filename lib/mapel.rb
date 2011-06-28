@@ -79,6 +79,7 @@ module Mapel
         self
       end
 
+      # Removes EXIF profile data.
       def strip
         @commands << "-strip"
         self
