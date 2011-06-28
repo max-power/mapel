@@ -4,7 +4,7 @@ end
 
 module Mapel
 
-  # Mapel.info('image.jpg')
+  # Mapel.info("image.jpg")
   def self.info(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).info(source)
   end
@@ -14,7 +14,7 @@ module Mapel
     Mapel::Engine.const_get(camelize(engine)).exif(source)
   end
 
-  # Mapel.render('image.jpg').resize("50%").to('output.jpg').run
+  # Mapel.render("image.jpg").resize("50%").to("output.jpg").run
   def self.render(source, engine = :image_magick)
     Mapel::Engine.const_get(camelize(engine)).render(source)
   end
@@ -39,33 +39,33 @@ module Mapel
     class ImageMagick < Engine
       def self.info(source)
         im = new
-        im.commands << 'identify'
+        im.commands << "identify"
         im.commands << source.inspect
         im.run.to_info_hash
       end
 
       def self.exif(source)
         im = new
-        im.commands << 'identify -format %[exif:*]'
+        im.commands << "identify -format %[exif:*]"
         im.commands << source.inspect
         im.run.to_exif_hash
       end
 
       def self.render(source = nil)
         im = new
-        im.commands << 'convert'
+        im.commands << "convert"
         im.commands << source.inspect unless source.nil?
         im
       end
 
       def self.list(type = nil)
         im = new
-        im.commands << 'convert -list'
+        im.commands << "convert -list"
         im.run
       end
 
       def crop(*args)
-        @commands << "-crop \"#{Geometry.new(*args).to_s(true)}\""
+        @commands << %(-crop "#{Geometry.new(*args).to_s(true)}")
         self
       end
 
@@ -93,7 +93,7 @@ module Mapel
       end
 
       def resize(*args)
-        @commands << "-resize \"#{Geometry.new(*args)}\""
+        @commands << %(-resize "#{Geometry.new(*args)}")
         self
       end
 
@@ -103,7 +103,7 @@ module Mapel
       end
 
       def scale(*args)
-        @commands << "-scale \"#{Geometry.new(*args)}\""
+        @commands << %(-scale "#{Geometry.new(*args)}")
         self
       end
 
@@ -124,18 +124,18 @@ module Mapel
       end
 
       def to_preview
-        @commands.map { |cmd| cmd.respond_to?(:call) ? cmd.call : cmd }.join(' ')
+        @commands.map { |cmd| cmd.respond_to?(:call) ? cmd.call : cmd }.join(" ")
       end
 
       def to_info_hash
         return {} if @output == ""
-        meta = @output.split(' ')
+        meta = @output.split(" ")
 
-        # Count backwards as an image's path may contain a space
+        # Count backwards as an image"s path may contain a space
         {
-          :path       => meta[0..-9].join(' '),
+          :path       => meta[0..-9].join(" "),
           :format     => meta[-8],
-          :dimensions => meta[-7].split('x').map {|d| d.to_i},
+          :dimensions => meta[-7].split("x").map {|d| d.to_i},
           :depth      => meta[-5],
           :size       => meta[-3]
         }
@@ -153,7 +153,7 @@ module Mapel
   class Geometry
     attr_accessor :width, :height, :x, :y, :flag
 
-    FLAGS = ['', '%', '<', '>', '!', '@', '^']
+    FLAGS = ["", "%", "<", ">", "!", "@", "^"]
 
     # Regex parser for geometry strings
     RE = /\A(\d*)(?:x(\d+)?)?([-+]\d+)?([-+]\d+)?([%!<>@\^]?)\Z/
@@ -179,9 +179,9 @@ module Mapel
 
     # Convert object to a geometry string
     def to_s(crop = false)
-      str = ''
+      str = ""
       str << "%g" % @width if @width > 0
-      str << 'x' if @height > 0
+      str << "x" if @height > 0
       str << "%g" % @height if @height > 0
       str << "%+d%+d" % [@x, @y] if (@x != 0 || @y != 0 || crop)
       str << @flag if @flag
@@ -191,7 +191,7 @@ module Mapel
 
   # By default, camelize converts strings to UpperCamelCase.
   #
-  # camelize will also convert '/' to '::' which is useful for converting paths to namespaces
+  # camelize will also convert "/" to "::" which is useful for converting paths to namespaces
   #
   # @example
   # "active_record".camelize #=> "ActiveRecord"
