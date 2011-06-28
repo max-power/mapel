@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper.rb'
+require File.dirname(__FILE__) + "/spec_helper.rb"
 
 describe Mapel do
 
@@ -21,10 +21,10 @@ describe Mapel do
     it "should return basic image metadata" do
       info = Mapel.info(logo)
       info[:path].should == logo
-      info[:format].should == 'JPEG'
+      info[:format].should == "JPEG"
       info[:dimensions].should == [572, 591]
-      info[:depth].should == '8-bit'
-      ["95.1kb", "97.4KB"].include?(info[:size]).should == true
+      info[:depth].should == "8-bit"
+      ["95.1kb", "97.4KB"].include?(info[:size]).should == true # allow KB and KiB
     end
 
     it "should return an empty hash if metadata can not be extracted" do
@@ -38,27 +38,31 @@ describe Mapel do
 
   describe "#render" do
     it "should be able to scale an image" do
-      cmd = Mapel(logo).scale('50%').to(out_folder + '/scaled.jpg').run
+      out_file = "#{out_folder}/scaled.jpg"
+      cmd = Mapel(logo).scale("50%").to(out_file).run
       cmd.status.should == true
-      Mapel.info(out_folder + '/scaled.jpg')[:dimensions].should == [286, 296]
+      Mapel.info(out_file)[:dimensions].should == [286, 296]
     end
 
     it "should be able to crop an image" do
-      cmd = Mapel(logo).crop('50x50+0+0').to(out_folder + '/cropped.jpg').run
+      out_file = "#{out_folder}/cropped.jpg"
+      cmd = Mapel(logo).crop("50x50+0+0").to(out_file).run
       cmd.status.should == true
-      Mapel.info(out_folder + '/cropped.jpg')[:dimensions].should == [50, 50]
+      Mapel.info(out_file)[:dimensions].should == [50, 50]
     end
 
     it "should be able to resize an image" do
-      cmd = Mapel(logo).resize('100x').to(out_folder + '/resized.jpg').run
+      out_file = "#{out_folder}/cropped.jpg"
+      cmd = Mapel(logo).resize("100x").to(out_file).run
       cmd.status.should == true
-      Mapel.info(out_folder + '/resized.jpg')[:dimensions].should == [100, 103]
+      Mapel.info(out_file)[:dimensions].should == [100, 103]
     end
 
     it "should be able to crop-resize an image" do
-      cmd = Mapel(logo).gravity(:west).resize!('50x100').to(out_folder + '/crop_resized.jpg').run
+      out_file = "#{out_folder}/crop_resized.jpg"
+      cmd = Mapel(logo).gravity(:west).resize!("50x100").to(out_file).run
       cmd.status.should == true
-      Mapel.info(out_folder + '/crop_resized.jpg')[:dimensions].should == [50, 100]
+      Mapel.info(out_file)[:dimensions].should == [50, 100]
     end
 
     it "should allow arbitrary addition of commands to the queue" do
@@ -74,14 +78,14 @@ describe Mapel do
 
     it "should be able to handle input filenames containing spaces" do
       out_file = "#{out_folder}/resized.jpg"
-      cmd = Mapel(multi_word_file).resize('100x').to(out_file).run
+      cmd = Mapel(multi_word_file).resize("100x").to(out_file).run
       cmd.status.should == true
       Mapel.info(out_file)[:dimensions].should == [100, 103]
     end
 
     it "should be able to handle output filenames containing spaces" do
       out_file = "#{out_folder}/multi-word file.jpg"
-      cmd = Mapel(@logo).resize('100x').to(out_file).run
+      cmd = Mapel(@logo).resize("100x").to(out_file).run
       cmd.status.should == true
       Mapel.info(out_file)[:dimensions].should == [100, 103]
     end
