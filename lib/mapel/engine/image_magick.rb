@@ -108,17 +108,7 @@ module Mapel
         with_command path.inspect
       end
 
-      # Performs the commands.
-      def run
-        @output = `#{to_preview}`
-        @status = ($? == 0)
-        self
-      end
-      
-      def to_preview
-        @commands.map { |cmd| cmd.respond_to?(:call) ? cmd.call : cmd }.join(" ")
-      end
-
+      # Returns a hash of image informations
       def to_info_hash
         return {} if @output.empty?
         meta = @output.split(" ")
