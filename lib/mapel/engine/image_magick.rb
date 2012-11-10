@@ -144,7 +144,6 @@ module Mapel
       
       def to_list(parse = true)
         return self unless parse
-        return [] if @output.empty?
         @output.split("\n")
       end
     end
