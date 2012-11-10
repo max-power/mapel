@@ -121,12 +121,11 @@ module Mapel
       def to_info_hash
         return {} if @output.empty?
         meta = @output.split(" ")
-
         # Count backwards as an image's path may contain a space
         {
           path:       meta[0..-9].join(" "),
           format:     meta[-8],
-          dimensions: meta[-7].split("x").map {|d| d.to_i},
+          dimensions: meta[-7].split("x").map(&:to_i),
           depth:      meta[-5],
           size:       meta[-3]
         }
