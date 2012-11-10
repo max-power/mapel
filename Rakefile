@@ -6,4 +6,4 @@ Rake::TestTask.new do |t|
   t.libs << 'spec'
 end
 
-task :default => :spec
+task :default => :test
