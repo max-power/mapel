@@ -14,8 +14,11 @@ module Mapel
           new.with_command("convert", source.nil? ? nil : source.inspect)
         end
 
-        def list(type = nil)
-          new.with_command("convert -list", type).run
+        # http://www.imagemagick.org/script/command-line-options.php#list
+        # ex: Mapel.list()
+        # ex: Mapel.list('Orientation', true)
+        def list(type = nil, convert_to_array=false)
+          new.with_command("convert -list", type).run.to_list(convert_to_array)
         end
       end
 
@@ -136,6 +139,12 @@ module Mapel
         return {} if @output.empty?
         meta = @output.scan(/exif:([^=]+)=([^\n]+)/)
         Hash[meta]
+      end
+      
+      def to_list(convert=false)
+        return self unless convert
+        return [] if @output.empty?
+        @output.split("\n")
       end
     end
   end
