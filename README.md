@@ -1,22 +1,30 @@
-= Mapel
+# Mapel
 
 Mapel is a dead-simple, chainable image-rendering DSL for ImageMagick.
 Still very much an experiment-in-progress, it supports a dozen or so essential
 commands.
 
 
-== Usage
+## Usage
 
 Mapel supports chaining various commands to perform image transformations.
 The basic format is:
 
     Mapel.render("input.jpg").<commands>.to("output.jpg").run
 
-=== Example
+### Example
 
     Mapel.render("image.jpg").resize("100x").to("resized_image.jpg").run
 
-=== Supported commands
+#### Getting image information
+
+    Mapel.info("input.jpg")  # { path: ..., format: ..., dimensions: ..., depth: ..., size: ...}
+
+#### Getting EXIF meta data
+
+    Mapel.exif("input.jpg")
+
+### Supported commands
 
 Some commands support ImageMagick geometry. For a complete list of geometry options,
 visit http://www.imagemagick.org/script/command-line-processing.php#geometry.
@@ -33,15 +41,7 @@ visit http://www.imagemagick.org/script/command-line-processing.php#geometry.
 
 For more information on the available methods and how they are translated to ImageMagick options, please read the source.
 
-== Getting image information
-
-    Mapel.info("input.jpg")  # { path: ..., format: ..., dimensions: ..., depth: ..., size: ...}
-
-== Getting EXIF meta data
-
-    Mapel.exif("input.jpg")
-
-== Meta
+## Meta
 
 Written by Aleks Williams (http://github.com/akdubya)
 
