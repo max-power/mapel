@@ -63,11 +63,14 @@ describe Mapel do
 
     describe "list" do
       it "should list ImageMagick commands" do
-        Mapel.list.output.must_match /^Version: ImageMagick/
+        list = Mapel.list
+        list.must_be_kind_of Array
+        list.must_include "Orientation"
+        list.must_include "Style"
       end
       
-      it "should return an array of values if called with an type and true" do
-        Mapel.list(:Orientation, true).must_equal ["TopLeft", "TopRight", "BottomRight", "BottomLeft", "LeftTop", "RightTop", "RightBottom", "LeftBottom"]
+      it "should return an array of values if called with an type" do
+        Mapel.list(:Orientation).must_equal ["TopLeft", "TopRight", "BottomRight", "BottomLeft", "LeftTop", "RightTop", "RightBottom", "LeftBottom"]
       end
     end
 

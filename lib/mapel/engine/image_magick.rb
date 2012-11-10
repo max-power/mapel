@@ -17,8 +17,9 @@ module Mapel
         # http://www.imagemagick.org/script/command-line-options.php#list
         # ex: Mapel.list()
         # ex: Mapel.list('Orientation', true)
-        def list(type = nil, convert_to_array=false)
-          new.with_command("convert -list", type).run.to_list(convert_to_array)
+        # pass false as second argument, if you want an unparsed result
+        def list(type = 'list', parse = true)
+          new.with_command("convert -list", type).run.to_list(parse)
         end
       end
 
@@ -141,8 +142,8 @@ module Mapel
         Hash[meta]
       end
       
-      def to_list(convert=false)
-        return self unless convert
+      def to_list(parse = true)
+        return self unless parse
         return [] if @output.empty?
         @output.split("\n")
       end
