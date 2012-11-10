@@ -1,6 +1,6 @@
 # Mapel
 
-Mapel is a dead-simple, chainable image-rendering DSL for ImageMagick.
+Mapel is a dead-simple, chainable image-rendering DSL for ImageMagick.  
 Still very much an experiment-in-progress, it supports a dozen or so essential
 commands.
 
