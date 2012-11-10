@@ -1,4 +1,4 @@
-# Mapel
+# Mapel [![Build Status](https://secure.travis-ci.org/max-power/mapel.png?branch=master)](https://travis-ci.org/max-power/mapel)
 
 Mapel is a dead-simple, chainable image-rendering DSL for ImageMagick.  
 Still very much an experiment-in-progress, it supports a dozen or so essential
