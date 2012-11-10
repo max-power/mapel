@@ -63,6 +63,15 @@ module Mapel
       def orient
         with_command "-auto-orient"
       end
+      
+      # Sets the quality level of the output image
+      #
+      # More information on ImageMagick's quality option:
+      #   http://www.imagemagick.org/script/command-line-options.php#quality
+      #
+      def quality(level)
+        with_command "-quality #{level}"
+      end
 
       # Resets the virtual canvas meta-data on the image.
       #

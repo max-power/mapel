@@ -31,13 +31,15 @@ visit http://www.imagemagick.org/script/command-line-processing.php#geometry.
 
     crop(<geometry>)    # Crops an image
     gravity(<type>)     # Sets the current gravity suggestion
+    grayscale           # Converts image to grayscale
     orient              # Automatically rotates an image with EXIF Orientation
+    quality(<level>)    # Sets the quality of the image
     repage              # Resets the virtual canvas meta-data on the image
     resize(<geometry>)  # Resizes an image
     resize!(<geometry>) # Crop-resizes an image: performs resize + crop + repage
     scale(<geometry>)   # Scales an image, which is faster than resizing it
     strip               # Removes any profiles or comments from the image
-    grayscale           # Grayscales an image
+
 
 For more information on the available methods and how they are translated to ImageMagick options, please read the source.
 
