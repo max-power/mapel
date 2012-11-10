@@ -45,11 +45,11 @@ For more information on the available methods and how they are translated to Ima
 
 ## Meta
 
-Written by Aleks Williams (http://github.com/akdubya)
+Written by Aleks Williams (http://github.com/akdubya)  
 Original Version: http://github.com/akdubya/mapel
 
 Released under the MIT License. See LICENSE for details.
 
 ---
 
-__Fun Fact___: Mapel is named after a tortoiseshell cat.
+__Fun Fact__: Mapel is named after a tortoiseshell cat.
