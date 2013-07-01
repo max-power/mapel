@@ -137,6 +137,13 @@ describe Mapel do
         Mapel.exif(out_file)["Orientation"].must_equal "1"
         Mapel.info(out_file)[:dimensions].must_equal [194, 200]
       end
+
+      it "should be able to rotate an image" do
+        out_file = "#{out_folder}/rotated_90.jpg"
+        cmd = Mapel(logo).rotate("90").to(out_file).run
+        cmd.status.must_equal true
+        Mapel.info(out_file)[:dimensions].must_equal [591, 572]
+      end
     end
   end
 end
