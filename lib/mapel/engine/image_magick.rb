@@ -86,6 +86,15 @@ module Mapel
         with_command "+repage"
       end
 
+      # Rotates in degree an image.
+      #
+      # More information on ImageMagick's repage option:
+      #   http://www.imagemagick.org/script/command-line-options.php#repage
+      #
+      def rotate(*args)
+        with_command %(-rotate "#{Geometry.new(*args)}")
+      end
+
       # Resizes an image to given geometry args.
       #
       # More information on ImageMagick's resize option:
